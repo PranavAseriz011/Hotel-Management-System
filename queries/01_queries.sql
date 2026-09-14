@@ -192,3 +192,148 @@ LIMIT 2;
 SELECT * 
 FROM Payments
 WHERE Amount < 1500;
+
+-- ============================================
+-- QUESTION 19
+-- ============================================
+
+-- Show the total revenue handled by each StaffID.
+
+SELECT StaffID,SUM(TotalAmount) AS TotRev
+FROM Bookings
+GROUP BY StaffID;
+
+-- ============================================
+-- QUESTION 20
+-- ============================================
+
+-- The manager wants to see all customers from Mumbai to check city-wise marketing campaigns. 
+
+SELECT * 
+FROM Customers 
+WHERE City = 'Mumbai';
+
+-- ============================================
+-- QUESTION 21
+-- ============================================
+
+-- Display the 3 lowest booking amounts. 
+
+SELECT TotalAmount
+FROM Bookings 
+ORDER BY TotalAmount ASC
+LIMIT 3;
+
+-- ============================================
+-- QUESTION 22
+-- ============================================
+
+-- Insert 5 new room records with type, price, and capacity into the Rooms table.
+
+INSERT INTO Rooms 
+(RoomType, PricePerNight, Capacity)
+VALUES 
+('Double',7745,2),
+('Single',6745,1),
+('Deluxe',10000,2),
+('VIP',20000,1),
+('suite',6989,2);
+
+-- ============================================
+-- QUESTION 23
+-- ============================================
+
+-- Show all unique CustomerIDs from bookings. 
+
+SELECT 
+DISTINCT CustomerID
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 24
+-- ============================================
+
+-- The marketing team wants to update the FirstName of CustomerID = 30 to 'Rahul'
+
+UPDATE Customers 
+SET FirstName = 'Rahul'
+WHERE CustomerID = 30;
+
+-- ============================================
+-- QUESTION 25
+-- ============================================
+
+-- List all bookings ordered by CheckInDate.
+
+SELECT * 
+FROM Bookings
+ORDER BY CheckInDate ASC;
+
+-- ============================================
+-- QUESTION 26
+-- ============================================
+
+-- Show all rooms where capacity is greater than 2
+
+SELECT * 
+FROM Rooms 
+WHERE Capacity > 2;
+
+-- ============================================
+-- QUESTION 27
+-- ============================================
+
+-- List staff emails ordered by their roles.
+
+SELECT Email,Role
+FROM Staff
+ORDER BY Role;
+
+-- ============================================
+-- QUESTION 28
+-- ============================================
+
+-- Display each customer’s full name and city using CONCAT_WS. 
+
+SELECT CONCAT_WS('-',FirstName,LastName,City) AS FullNameAndCity
+FROM Customers;
+
+-- ============================================
+-- QUESTION 29
+-- ============================================
+
+-- Show the first 4 customers’ full names only
+
+SELECT CONCAT(FirstName,' ',LastName) AS FullName
+FROM Customers 
+LIMIT 4;
+
+-- ============================================
+-- QUESTION 30
+-- ============================================
+
+-- Show each staff’s role with their full name
+
+SELECT CONCAT_WS(' ',FirstName,LastName) AS FullName,
+Role
+FROM Staff;
+
+-- ============================================
+-- QUESTION 31
+-- ============================================
+
+-- Management wants to find the average StaffID per role.
+
+ SELECT Role,AVG(StaffID) AS AvgStaffID
+ FROM Staff
+ GROUP BY Role;
+
+ -- ============================================
+-- QUESTION 32
+-- ============================================
+
+  -- List all bookings handled by StaffID = 2. 
+ 
+ SELECT * 
+ FROM Bookings
+ WHERE StaffID = 2;
