@@ -328,7 +328,7 @@ FROM Staff;
  FROM Staff
  GROUP BY Role;
 
- -- ============================================
+-- ============================================
 -- QUESTION 32
 -- ============================================
 
@@ -337,3 +337,191 @@ FROM Staff;
  SELECT * 
  FROM Bookings
  WHERE StaffID = 2;
+
+-- ============================================
+-- QUESTION 33
+-- ============================================
+
+  -- Display the first 3 staff alphabetically by their first names.
+ 
+ SELECT *
+ FROM Staff
+ ORDER BY FirstName ASC 
+ LIMIT 3;
+
+-- ============================================
+-- QUESTION 34
+-- ============================================
+
+  --  The front desk manager wants to see customers where FirstName = 'Anirudh' AND City = 'Nagpur' for personal attention.
+
+SELECT *
+FROM Customers 
+WHERE FirstName = 'Anirudh'
+AND City = 'Nagpur';
+
+-- ============================================
+-- QUESTION 35
+-- ============================================
+
+--  Show all unique payment methods in descending order.
+
+SELECT DISTINCT PaymentMethod
+FROM Payments 
+ORDER BY PaymentMethod DESC;
+
+-- ============================================
+-- QUESTION 36
+-- ============================================
+
+-- Insert 5 staff members into the Staff table with their role, phone, and email. 
+
+INSERT INTO Staff (FirstName, LastName, Role, Phone, Email)
+VALUES 
+('Ankush','More','Chef',9762444934,'ankush@gmail.com'),
+('Rohit','Sharma','Manager',9876543210,'rohit@gmail.com'),
+('Sneha','Patil','Receptionist',9765432109,'sneha@gmail.com'),
+('Vikas','Jadhav','Housekeeper',9654321098,'vikas@gmail.com'),
+('Priya','Deshmukh','Accountant',9543210987,'priya@gmail.com');
+
+-- ============================================
+-- QUESTION 37
+-- ============================================
+
+-- The hotel manager wants to review bookings where CheckInDate is after '2024 01-01' to analyze recent occupancy.
+
+SELECT * 
+FROM Bookings 
+WHERE CheckInDate > '2024-01-01';
+
+-- ============================================
+-- QUESTION 38
+-- ============================================
+
+--  List all customers whose FirstName is 'Rahul' for a loyalty program.
+
+SELECT *
+FROM Customers 
+WHERE FirstName = 'Rahul';
+
+-- ============================================
+-- QUESTION 39
+-- ============================================
+
+--  Show all unique room types offered by the hotel.
+
+SELECT DISTINCT 
+RoomType
+FROM Rooms;
+
+-- ============================================
+-- QUESTION 40
+-- ============================================
+
+-- Identify customers who spent more than 50,000 in total. 
+
+SELECT CustomerID,SUM(TotalAmount) AS TotSpent
+FROM Bookings
+GROUP BY CustomerID
+HAVING TotSpent > 50000; 
+
+-- ============================================
+-- QUESTION 41
+-- ============================================
+
+-- Delete all customers from the city 'TestCity'.
+
+SET SQL_SAFE_UPDATES = 0;
+
+DELETE FROM Customers 
+WHERE City = 'TestCity';
+
+-- ============================================
+-- QUESTION 42
+-- ============================================
+
+-- The manager wants to see staff whose Email ends with '@tcs.in' for corporate tie-ups
+
+SELECT *
+FROM Staff
+WHERE Email LIKE '%@tcs.in';
+
+-- ============================================
+-- QUESTION 43
+-- ============================================
+
+-- The analytics team wants to list all cities where maximum CustomerID is more than 100
+
+SELECT City,MAX(CustomerID) AS MaxCusId
+FROM Customers 
+GROUP BY City
+HAVING MaxCusId > 100;
+
+-- ============================================
+-- QUESTION 44
+-- ============================================
+
+-- Show all unique capacities in descending order.
+
+SELECT DISTINCT Capacity 
+FROM Rooms
+ORDER BY Capacity DESC;
+
+-- ============================================
+-- QUESTION 45
+-- ============================================
+
+--  List staff working as Managers. 
+
+SELECT *
+FROM Staff
+WHERE Role = 'Manager';
+
+-- ============================================
+-- QUESTION 46
+-- ============================================
+
+-- Display each payment’s ID, Method, Amount in one line.
+
+SELECT CONCAT_WS('-',PaymentID,PaymentMethod,Amount)
+AS PaymentInfo
+FROM Payments;
+
+-- ============================================
+-- QUESTION 47
+-- ============================================
+
+--  Show the first 4 payments only. 
+
+SELECT *
+FROM Payments
+LIMIT 4;
+
+-- ============================================
+-- QUESTION 48
+-- ============================================
+
+--  The hotel manager wants to review rooms where PricePerNight is between ₹2000 and ₹4000 to offer discounts. 
+
+SELECT *
+FROM Rooms 
+WHERE PricePerNight BETWEEN 2000 AND 4000;
+
+-- ============================================
+-- QUESTION 49
+-- ============================================
+
+--  List all bookings ordered by CheckInDate.
+
+SELECT *
+FROM Bookings 
+ORDER BY CheckInDate;
+
+-- ============================================
+-- QUESTION 50
+-- ============================================
+
+-- Display all unique CustomerIDs from bookings.
+
+SELECT DISTINCT CustomerID
+FROM Bookings;
