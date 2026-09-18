@@ -525,3 +525,284 @@ ORDER BY CheckInDate;
 
 SELECT DISTINCT CustomerID
 FROM Bookings;
+
+-- ============================================
+-- QUESTION 51
+-- ============================================
+
+-- The hotel manager wants to add new customer details. Insert 5 records with full details into the Customers table.
+
+INSERT INTO Customers
+(FirstName, LastName, Email, Phone, City)
+VALUES 
+('Pranav','Aseri','aseripranav@gmail.com',7620441825,'Ahmednagar'),
+('Aarav','Patil','aaravpatil@gmail.com',9876543210,'Pune'),
+('Riya','Shinde','riyashinde@gmail.com',9765432109,'Mumbai'),
+('Aditya','Jadhav','adityajadhav@gmail.com',9654321098,'Nashik'),
+('Sneha','More','snehamore@gmail.com',9543210987,'Nagpur');
+
+-- ============================================
+-- QUESTION 51
+-- ============================================
+
+-- Show the last 2 staff hired.
+
+SELECT *
+FROM Staff 
+ORDER BY StaffID DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 52
+-- ============================================
+
+--  Identify rooms with PricePerNight higher than the maximum PricePerNight of rooms with Capacity = 2. (Rooms subquery) 
+
+SELECT *
+FROM Rooms
+WHERE PricePerNight > (
+      SELECT MAX(PricePerNight)
+	    FROM Rooms 
+      WHERE Capacity = 2
+      );
+
+-- ============================================
+-- QUESTION 53
+-- ============================================
+
+-- The HR team wants to see staff whose Role is not 'Chef' for role reallocation. 
+
+SELECT *
+FROM Staff 
+WHERE Role <> 'Chef';
+
+-- ============================================
+-- QUESTION 54
+-- ============================================
+
+--  Show all unique cities in descending order from the Customers table. 
+
+SELECT DISTINCT City
+FROM Customers
+ORDER BY City DESC;
+
+-- ============================================
+-- QUESTION 55
+-- ============================================
+
+-- Display the phone number of the Waiter only. 
+
+SELECT Phone
+FROM Staff
+WHERE Role = 'Waiter';
+
+-- ============================================
+-- QUESTION 56
+-- ============================================
+
+-- Display the last 2 bookings in the table.
+
+SELECT *
+FROM Bookings
+ORDER BY BookingID DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 57
+-- ============================================
+
+-- The marketing team wants to see customers living in Delhi or Chennai for targeted promotions 
+
+SELECT *
+FROM Customers
+WHERE City = 'Chennai'
+OR City = 'Delhi';
+
+-- ============================================
+-- QUESTION 58
+-- ============================================
+
+-- Show all rooms where RoomType != 'Family' to plan renovations.
+
+SELECT *
+FROM Rooms
+WHERE RoomType != 'Family';
+
+-- ============================================
+-- QUESTION 59
+-- ============================================
+
+-- List staff emails ordered by their roles.
+
+SELECT Email
+FROM Staff
+ORDER BY Role;
+
+-- ============================================
+-- QUESTION 60
+-- ============================================
+
+-- Display all unique payment methods.
+
+SELECT DISTINCT PaymentMethod
+FROM Payments;
+
+-- ============================================
+-- QUESTION 61
+-- ============================================
+
+-- The receptionist wants a list of customers whose Phone starts with '98' for mobile offers
+
+SELECT *
+FROM Customers
+WHERE Phone LIKE "98%";
+
+-- ============================================
+-- QUESTION 62
+-- ============================================
+
+-- Show the 3 cheapest rooms available for budget travelers. 
+
+SELECT *
+FROM Rooms 
+ORDER BY PricePerNight 
+LIMIT 3;
+
+-- ============================================
+-- QUESTION 63
+-- ============================================
+
+-- Display the last 2 payments. 
+
+SELECT *
+FROM Payments
+ORDER BY PaymentID DESC 
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 64
+-- ============================================
+
+-- Management wants to know which unique cities customers come from.
+
+SELECT DISTINCT City
+FROM Customers;
+
+-- ============================================
+-- QUESTION 65
+-- ============================================
+
+-- List all bookings where TotalAmount > 5000
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > 5000;
+
+-- ============================================
+-- QUESTION 66
+-- ============================================
+
+-- Display each staff’s Role with their Email in one column.
+
+SELECT CONCAT_WS('-',Role,Email) AS StaffEmail
+FROM Staff;
+
+-- ============================================
+-- QUESTION 67
+-- ============================================
+
+-- Show the first 4 staff full names. 
+
+SELECT CONCAT(FirstName,' ',LastName) AS FullName
+FROM Staff
+ORDER BY StaffID 
+LIMIT 4;
+
+-- ============================================
+-- QUESTION 68
+-- ============================================
+
+-- Find bookings where TotalAmount is greater than all bookings made by CustomerID = 10. (Bookings subquery) 
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > (
+       SELECT MAX(TotalAmount)
+       FROM Bookings 
+       WHERE CustomerID = 10
+       );
+
+-- ============================================
+-- QUESTION 69
+-- ============================================
+
+-- List rooms with capacity >= 3 for family bookings. 
+
+SELECT *
+FROM Rooms
+WHERE Capacity  >= 3;
+
+-- ============================================
+-- QUESTION 70
+-- ============================================
+
+-- Display the RoomType and Price of only Suite rooms. 
+
+SELECT Roomtype,PricePerNight
+FROM Rooms
+WHERE RoomType = 'Suite';
+
+-- ============================================
+-- QUESTION 71
+-- ============================================
+
+-- The cashier wants to see payments with Amount between ₹2000 and ₹7000 for mid-range billing checks. 
+
+SELECT *
+FROM Payments 
+WHERE Amount BETWEEN 2000 AND 7000;
+
+-- ============================================
+-- QUESTION 72
+-- ============================================
+
+-- Insert 5 booking records into the Bookings table with all details.
+
+INSERT INTO Bookings
+(CustomerID, RoomID, StaffID, CheckInDate, CheckOutDate, TotalAmount)
+VALUES 
+(1, 5, 2, '2024-06-01', '2024-06-03', 6000),
+(2, 8, 3, '2024-06-05', '2024-06-07', 7500),
+(3, 2, 1, '2024-06-10', '2024-06-12', 4500),
+(4, 10, 4, '2024-06-15', '2024-06-18', 9000),
+(5, 7, 2, '2024-06-20', '2024-06-22', 5500);
+
+-- ============================================
+-- QUESTION 73
+-- ============================================
+
+-- Display the 3 lowest payments made by customers.
+
+SELECT *
+FROM Payments
+ORDER BY Amount
+LIMIT 3;
+
+-- ============================================
+-- QUESTION 74
+-- ============================================
+
+-- Show each booking’s BookingID with TotalAmount using CONCAT
+
+SELECT CONCAT_WS('-',BookingID,TotalAmount) AS BookingInfo
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 75
+-- ============================================
+
+-- Show all unique RoomIDs in descending order.
+
+SELECT DISTINCT RoomID 
+FROM Rooms
+ORDER BY RoomID DESC;
