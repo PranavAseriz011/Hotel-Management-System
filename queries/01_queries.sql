@@ -806,3 +806,254 @@ FROM Bookings;
 SELECT DISTINCT RoomID 
 FROM Rooms
 ORDER BY RoomID DESC;
+
+-- ============================================
+-- QUESTION 76
+-- ============================================
+
+-- Display each room’s RoomType and Price using CONCAT_WS.
+
+SELECT CONCAT_WS("-",RoomType,PricePerNight) AS RoomInfo
+FROM Rooms;
+
+-- ============================================
+-- QUESTION 77
+-- ============================================
+
+--  The admin wants to delete all bookings handled by StaffID = 3.
+
+DELETE FROM Bookings
+WHERE StaffID = 3; 
+
+-- ============================================
+-- QUESTION 78
+-- ============================================
+
+-- Show customers whose FirstName length > 5 characters for a name-pattern study 
+
+SELECT *
+FROM Customers 
+WHERE LENGTH(FirstName) > 5;
+
+-- ============================================
+-- QUESTION 79
+-- ============================================
+
+-- Show all unique roles available in the hotel. 
+
+SELECT DISTINCT Role
+FROM Staff;
+
+-- ============================================
+-- QUESTION 80
+-- ============================================
+
+--  List all rooms where capacity is greater than 2. 
+
+SELECT *
+FROM Rooms
+WHERE Capacity > 2;
+
+-- ============================================
+-- QUESTION 81
+-- ============================================
+
+-- Display each payment’s ID with Amount using CONCAT.
+
+SELECT CONCAT(PaymentID,"-",Amount) AS PAYMENTS
+FROM Payments;
+
+-- ============================================
+-- QUESTION 82
+-- ============================================
+
+--  List all Card payments from the Payments table. 
+
+SELECT *
+FROM Payments
+WHERE PaymentMethod = 'Card';
+
+-- ============================================
+-- QUESTION 83
+-- ============================================
+
+-- Delete all customers whose Email ends with '@test.com' as invalid.
+
+SET SQL_SAFE_UPDATES = 0;
+
+DELETE FROM Customers
+WHERE Email
+LIKE "%@test.com";
+
+-- ============================================
+-- QUESTION 84
+-- ============================================
+
+--  The hotel manager wants to review bookings where CheckOutDate before '202312-31' to measure old occupancy
+
+SELECT *
+FROM Bookings 
+WHERE CheckOutDate < '2023-12-31';
+
+-- ============================================
+-- QUESTION 85
+-- ============================================
+
+-- The front office manager needs to list rooms with capacity = 2 for couples.
+
+SELECT *
+FROM Rooms
+WHERE Capacity = 2;
+
+-- ============================================
+-- QUESTION 86
+-- ============================================
+
+--  Show all unique capacities in descending order
+
+SELECT DISTINCT Capacity 
+FROM Rooms
+ORDER BY Capacity DESC ;
+
+-- ============================================
+-- QUESTION 87
+-- ============================================
+
+-- The operations team wants to find the minimum TotalAmount in bookings.
+
+SELECT MIN(TotalAmount)
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 88
+-- ============================================
+
+-- Display all rooms by capacity in ascending order. 
+
+SELECT *
+FROM Rooms
+ORDER BY Capacity;
+
+-- ============================================
+-- QUESTION 89
+-- ============================================
+
+-- Show each booking’s BookingID with TotalAmount using CONCAT. 
+
+SELECT CONCAT(BookingID,"-",TotalAmount) AS bookings 
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 90
+-- ============================================
+
+-- The operations head wants to see rooms with Capacity = 4 AND PricePerNight > ₹6000 for premium family packages. 
+
+SELECT *
+FROM Rooms 
+WHERE Capacity = 4 
+AND PricePerNight > ₹6000;
+
+-- ============================================
+-- QUESTION 91
+-- ============================================
+
+-- Show staff full names combined into one column.
+
+SELECT CONCAT(FirstName," ",LastName) AS FullName 
+FROM Staff;
+
+-- ============================================
+-- QUESTION 92
+-- ============================================
+
+-- The accounts team wants to see bookings where the TotalAmount is greater than ₹10,000 to track high-value customers. 
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > 10000;
+
+-- ============================================
+-- QUESTION 93
+-- ============================================
+
+-- Show all unique payment methods in descending order
+
+SELECT DISTINCT PaymentMethod 
+FROM Payments
+ORDER BY PaymentMethod DESC;
+
+-- ============================================
+-- QUESTION 94
+-- ============================================
+
+--  Display the first 4 bookings only
+
+SELECT *
+FROM Bookings 
+LIMIT 4;
+
+-- ============================================
+-- QUESTION 95
+-- ============================================
+
+-- Show all unique staff first names. 
+
+SELECT DISTINCT FirstName
+FROM Staff;
+
+-- ============================================
+-- QUESTION 96
+-- ============================================
+
+--  Insert 5 new room records with type, price, and capacity into the Rooms table.
+
+INSERT INTO Rooms
+(RoomType, PricePerNight, Capacity)
+VALUES 
+('Deluxe',10000,2),
+('Suite',15000,4),
+('Standard',3000,2),
+('Family',8000,5),
+('Executive',12000,3);
+
+-- ============================================
+-- QUESTION 97
+-- ============================================
+
+--  Display each customer’s full name and city using CONCAT_WS. 
+
+SELECT CONCAT_WS(" ",FirstName,LastName,City) 
+AS CustomerInfo
+FROM Customers;
+
+-- ============================================
+-- QUESTION 98
+-- ============================================
+
+-- Show all unique cities in descending order from the Customers table.
+
+SELECT DISTINCT City 
+FROM Customers
+ORDER BY City DESC;
+
+-- ============================================
+-- QUESTION 99
+-- ============================================
+
+-- The analytics team wants to list all cities where maximum CustomerID is more than 100
+
+SELECT City, MAX(CustomerID) AS MaxCustomerID
+FROM Customers
+GROUP BY City
+HAVING MAX(CustomerID) > 100;
+
+-- ============================================
+-- QUESTION 100
+-- ============================================
+
+-- The HR team wants to see staff whose FirstName is 'Priya' for employee recognation 
+ 
+SELECT *
+FROM Staff 
+WHERE FirstName = 'Priya';
