@@ -1057,3 +1057,261 @@ HAVING MAX(CustomerID) > 100;
 SELECT *
 FROM Staff 
 WHERE FirstName = 'Priya';
+
+-- ============================================
+-- QUESTION 101
+-- ============================================
+
+-- Display the last 2 staff members from the Staff table.
+
+SELECT *
+FROM Staff
+ORDER BY StaffID DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 102
+-- ============================================
+
+-- Create a VIEW BookingSummary showing BookingID, CustomerID, RoomID, and TotalAmount.
+
+CREATE VIEW BookingSummary AS 
+SELECT BookingID, CustomerID, RoomID, TotalAmount
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 103
+-- ============================================
+
+-- Show all unique RoomIDs in descending order
+
+SELECT DISTINCT RoomID
+FROM Rooms
+ORDER BY RoomID 
+DESC;
+
+-- ============================================
+-- QUESTION 104
+-- ============================================
+
+--  Display each staff’s role with their full name. 
+
+SELECT CONCAT(FirstName," ",LastName) AS FullName
+,Role
+FROM Staff;
+
+-- ============================================
+-- QUESTION 105
+-- ============================================
+
+-- The receptionist wants to offer Suite rooms under ₹7000 to business travelers.
+
+SELECT *
+FROM Rooms
+WHERE PricePerNight < 7000 
+AND RoomType = 'Suite';
+
+-- ============================================
+-- QUESTION 106
+-- ============================================
+
+--  Display the first 3 staff alphabetically by their first names.
+
+SELECT *
+FROM Staff
+ORDER BY FirstName
+LIMIT 3;
+
+-- ============================================
+-- QUESTION 107
+-- ============================================
+
+-- List all bookings ordered by CheckInDate
+
+SELECT *
+FROM Bookings
+ORDER BY CheckInDate;
+
+-- ============================================
+-- QUESTION 108
+-- ============================================
+
+--  Show all unique StaffIDs from the bookings.
+
+SELECT DISTINCT StaffID
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 109
+-- ============================================
+
+-- Display the first 4 customers’ full names only.
+
+SELECT CONCAT(FirstName," ",LastName) AS FullName
+FROM Customers
+LIMIT 4;
+
+-- ============================================
+-- QUESTION 110
+-- ============================================
+
+-- Show all unique room types offered by the hotel. 
+
+SELECT DISTINCT RoomType
+FROM Rooms;
+
+-- ============================================
+-- QUESTION 111
+-- ============================================
+
+--  Display the phone number of the Waiter only. 
+
+SELECT Phone
+FROM Staff
+WHERE Role = 'Waiter';
+
+-- ============================================
+-- QUESTION 112
+-- ============================================
+
+-- Show all bookings where TotalAmount > 5000.
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > 5000;
+
+-- ============================================
+-- QUESTION 113
+-- ============================================
+
+--  The HR team wants to update Role = 'Senior Manager' where StaffID = 12. 
+
+UPDATE Staff
+SET Role = "Senior Manager"
+WHERE StaffID = 12;
+
+-- ============================================
+-- QUESTION 114
+-- ============================================
+
+-- List all staff working as Managers.
+
+SELECT *
+FROM Staff
+WHERE Role = 'Manager';
+
+-- ============================================
+-- QUESTION 115
+-- ============================================
+
+--  Show the last 2 registered customers for follow-up. 
+
+SELECT *
+FROM Customers
+ORDER BY CustomerID DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 116
+-- ============================================
+
+-- Display each booking’s BookingID with TotalAmount using CONCAT. 
+
+SELECT CONCAT(BookingID,' ',TotalAmount) AS Bookings
+FROM Bookings;
+
+--  Insert 5 staff members into the Staff table with their role, phone, and email.
+
+-- ============================================
+-- QUESTION 117
+-- ============================================
+
+INSERT INTO Staff
+(FirstName, LastName, Role, Phone, Email)
+VALUES
+('Kundan','Tope','HouseKiper',8767667859,'kundantope@gmail.com'),
+('Amit','Shinde','Receptionist',9876543211,'amitshinde@gmail.com'),
+('Neha','Patil','Manager',9765432187,'nehapatil@gmail.com'),
+('Rohan','Jadhav','Chef',9654321876,'rohanjadhav@gmail.com'),
+('Pooja','More','Waiter',9543218765,'poojamore@gmail.com');
+
+-- ============================================
+-- QUESTION 118
+-- ============================================
+
+-- Display the RoomType and Price of only Suite rooms.
+
+SELECT RoomType,PricePerNight
+FROM Rooms
+WHERE RoomType = 'Suite';
+
+-- ============================================
+-- QUESTION 119
+-- ============================================
+
+--  The admin wants to delete all payments linked to BookingID = 15.
+
+DELETE FROM Payments
+WHERE BookingID = 15;
+
+-- ============================================
+-- QUESTION 120
+-- ============================================
+
+--  Display all unique capacities in descending order.
+
+SELECT DISTINCT Capacity 
+FROM Rooms
+ORDER BY Capacity DESC;
+
+-- ============================================
+-- QUESTION 121
+-- ============================================
+
+-- Show the first 4 rooms sorted alphabetically by RoomType.
+
+SELECT *
+FROM Rooms
+ORDER BY RoomType
+LIMIT 4;
+
+-- ============================================
+-- QUESTION 122
+-- ============================================
+
+-- The cashier wants a report of payments where Amount < ₹1500 for small transaction 
+
+SELECT *
+FROM Payments 
+WHERE Amount < 1500; 
+
+-- ============================================
+-- QUESTION 123
+-- ============================================
+
+-- Show each booking’s BookingID with TotalAmount using CONCAT.
+
+SELECT CONCAT(BookingID,'-',TotalAmount) AS Bookings
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 124
+-- ============================================
+
+-- Display the last 2 added rooms from the Rooms table
+
+SELECT *
+FROM Rooms
+ORDER BY RoomID DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 125
+-- ============================================
+
+--  List all customers whose FirstName = 'Amit' AND City = 'Nagpur' for personal attention
+
+SELECT * 
+FROM Customers
+WHERE FirstName = 'Amit' 
+AND City = 'Nagpur';
