@@ -1315,3 +1315,271 @@ SELECT *
 FROM Customers
 WHERE FirstName = 'Amit' 
 AND City = 'Nagpur';
+
+-- ============================================
+-- QUESTION 126
+-- ============================================
+
+-- Insert 5 new customer details into the Customers table. 
+
+INSERT INTO Customers 
+(FirstName, LastName, Email, Phone, City)
+VALUES
+('Ram','Lingam','ramlingam@gmail.com',7654856748,'Gudgaon'),
+('Neel','Sharma','neelsharma@gmail.com',8765432190,'Delhi'),
+('Kavya','Joshi','kavyajoshi@gmail.com',7654321987,'Pune'),
+('Vikram','Rao','vikramrao@gmail.com',9876123450,'Mumbai'),
+('Ananya','Kulkarni','ananyakulkarni@gmail.com',9123456780,'Nashik');
+
+-- ============================================
+-- QUESTION 127
+-- ============================================
+
+-- Show staff full names combined into one column. 
+
+SELECT CONCAT(FirstName,' ',LastName) AS FullName
+FROM Staff;
+
+-- ============================================
+-- QUESTION 128
+-- ============================================
+
+-- Show all room details separated by commas using CONCAT_WS.
+
+SELECT CONCAT_WS(',',RoomID,RoomType, PricePerNight, Capacity)
+AS RoomDetails
+FROM Rooms;
+
+-- ============================================
+-- QUESTION 129
+-- ============================================
+
+--  Display each customer’s name and phone number together using CONCAT.
+
+SELECT CONCAT(FirstName,' ',Phone) AS CustomerInfo
+FROM Customers;
+
+-- ============================================
+-- QUESTION 130
+-- ============================================
+
+--  Display all payment details in one line using CONCAT_WS.
+
+SELECT CONCAT_WS('-',PaymentID, BookingID, PaymentDate, PaymentMethod, Amount)
+AS PaymentInfo
+FROM Payments;
+
+-- ============================================
+-- QUESTION 131
+-- ============================================
+
+--  Show the last 2 bookings in the table. 
+
+SELECT *
+FROM Bookings
+ORDER BY BookingID DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 132
+-- ============================================
+
+-- List all payments ordered by PaymentDate.
+
+SELECT *
+FROM Payments
+ORDER BY PaymentDate;
+
+-- ============================================
+-- QUESTION 133
+-- ============================================
+
+--  Show the 2 highest payments received. 
+
+SELECT *
+FROM Payments
+ORDER BY Amount DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 134
+-- ============================================
+
+-- The marketing team wants to check customers whose FirstName is 'Rahul' for a loyalty programe
+
+SELECT *
+FROM Customers
+WHERE FirstName = 'Rahul';
+
+-- ============================================
+-- QUESTION 135
+-- ============================================
+
+--  Display each PaymentID with its method using CONCAT.
+
+SELECT CONCAT(PaymentID,' ',PaymentMethod) AS 
+PaymentInfo 
+FROM Payments;
+
+-- ============================================
+-- QUESTION 136
+-- ============================================
+
+-- The operations team wants to list all PaymentMethods used more than 5 times. 
+
+SELECT PaymentMethod,COUNT(PaymentMethod)
+FROM Payments
+GROUP BY PaymentMethod 
+HAVING COUNT(PaymentMethod) > 5;
+
+-- ============================================
+-- QUESTION 137
+-- ============================================
+
+-- Show the 2 most expensive rooms for VIP guests. 
+
+SELECT *
+FROM Rooms
+ORDER BY PricePerNight DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 138
+-- ============================================
+
+--  Show each room’s RoomType and Price using CONCAT_WS
+
+SELECT CONCAT_WS(' ',RoomType,PricePerNight) AS RoomInfo
+FROM Rooms;
+
+-- ============================================
+-- QUESTION 139
+-- ============================================
+
+--  Display the first 3 staff alphabetically by their first names.
+
+SELECT *
+FROM Staff
+ORDER BY FirstName 
+LIMIT 3;
+
+-- ============================================
+-- QUESTION 140
+-- ============================================
+
+--  List all bookings handled by StaffID = 2.
+
+SELECT *
+FROM Bookings
+WHERE StaffID = 2;
+
+-- ============================================
+-- QUESTION 141
+-- ============================================
+
+-- The analytics team wants to find the city where average CustomerID is greater than 50 
+
+SELECT City,AVG(CustomerID) AS 
+AvgCustomerId
+FROM Customers
+GROUP BY City 
+HAVING AVG(CustomerID) > 50;
+
+-- ============================================
+-- QUESTION 142
+-- ============================================
+
+--  The hotel wants to display the 2 most expensive rooms for VIP guests.
+
+SELECT *
+FROM Rooms
+WHERE RoomType = 'VIP'
+ORDER BY PricePerNight DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 143
+-- ============================================
+
+-- Show all unique first names of customers for a duplicate check. 
+
+SELECT DISTINCT FirstName
+FROM Customers;
+
+-- ============================================
+-- QUESTION 144
+-- ============================================
+
+-- Show all unique roles in descending order
+
+SELECT DISTINCT Role
+FROM Staff
+ORDER BY Role DESC;
+
+-- ============================================
+-- QUESTION 145
+-- ============================================
+
+-- Identify rooms whose Capacity is greater than the average Capacity of all rooms
+
+SELECT *
+FROM Rooms
+WHERE Capacity > (
+SELECT 
+AVG(Capacity)
+FROM Rooms
+);
+
+-- ============================================
+-- QUESTION 146
+-- ============================================
+
+-- Display all rooms by capacity in ascending order
+
+SELECT *
+FROM Rooms
+ORDER BY Capacity;
+
+-- ============================================
+-- QUESTION 147
+-- ============================================
+
+-- Display the first 4 payments only.
+
+SELECT *
+FROM Payments
+ORDER BY PaymentID 
+LIMIT 4;
+
+-- ============================================
+-- QUESTION 148
+-- ============================================
+
+-- Show each payment’s ID, Method, Amount in one line. 
+
+SELECT CONCAT(PaymentID,' ',PaymentMethod,' ',Amount)
+AS Payments
+FROM Payments;
+
+-- ============================================
+-- QUESTION 149
+-- ============================================
+
+-- List all bookings where TotalAmount > 5000. 
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > 5000;
+
+-- ============================================
+-- QUESTION 150
+-- ============================================
+
+--  Find all customers whose CustomerID is greater than the average CustomerID.
+
+SELECT *
+FROM Customers
+WHERE CustomerID > (
+SELECT AVG(CustomerID)
+FROM Customers
+);
