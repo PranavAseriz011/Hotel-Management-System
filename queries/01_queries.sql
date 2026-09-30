@@ -1583,3 +1583,263 @@ WHERE CustomerID > (
 SELECT AVG(CustomerID)
 FROM Customers
 );
+
+-- ============================================
+-- QUESTION 151
+-- ============================================
+
+--  The HR manager wants to see staff whose Role is not 'Chef' for role reallocation
+
+SELECT *
+FROM Staff
+WHERE Role != 'Chef';
+
+-- ============================================
+-- QUESTION 152
+-- ============================================
+
+-- The accounts team wants to check bookings where TotalAmount is greater than 10000
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > 10000;
+
+-- ============================================
+-- QUESTION 153
+-- ============================================
+
+-- Display each staff’s role with their full name
+
+SELECT CONCAT(FirstName," ",LastName) AS FullName
+,Role
+FROM Staff;
+
+-- ============================================
+-- QUESTION 154
+-- ============================================
+
+-- Display all bookings where TotalAmount > 5000.
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > 5000;
+
+-- ============================================
+-- QUESTION 155
+-- ============================================
+
+-- The front desk wants to see customers whose Phone starts with '98'
+
+SELECT *
+FROM Customers
+WHERE Phone LIKE '98%';
+
+-- ============================================
+-- QUESTION 156
+-- ============================================
+
+-- The operations manager wants to check bookings with CheckOutDate before '2023-12-31'. 
+
+SELECT *
+FROM Bookings
+WHERE CheckOutDate < '2023-12-31';
+
+-- ============================================
+-- QUESTION 157
+-- ============================================
+
+-- Display all unique StaffIDs from the bookings.
+
+SELECT DISTINCT StaffID
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 158
+-- ============================================
+
+--  Create a VIEW OnlinePayments showing all payments made by PaymentMethod = 'Online'.
+
+CREATE VIEW OnlinePayments AS 
+SELECT *
+FROM Payments
+WHERE PaymentMethod = 'Online';
+
+-- ============================================
+-- QUESTION 159
+-- ============================================
+
+-- Display all unique payment methods in descending order. 
+
+SELECT DISTINCT PaymentMethod
+FROM Payments
+ORDER BY PaymentMethod DESC;
+
+-- ============================================
+-- QUESTION 160
+-- ============================================
+
+--  Display each payment’s ID with Amount using CONCAT.
+
+SELECT CONCAT(PaymentID," ",Amount) AS payments
+FROM Payments;
+
+-- ============================================
+-- QUESTION 161
+-- ============================================
+
+-- Show all unique RoomIDs in descending order. 
+
+SELECT DISTINCT RoomID 
+FROM Rooms
+ORDER BY RoomID 
+DESC;
+
+-- ============================================
+-- QUESTION 162
+-- ============================================
+
+--  The analytics team wants to list all cities where maximum CustomerID is more than 100
+
+SELECT City
+FROM Customers
+GROUP BY City 
+HAVING MAX(CustomerID) > 100;
+
+-- ============================================
+-- QUESTION 163
+-- ============================================
+
+-- List staff emails ordered by their roles.
+
+SELECT Email
+FROM Staff
+ORDER BY Role;
+
+-- ============================================
+-- QUESTION 164
+-- ============================================
+
+-- Find bookings where TotalAmount exceeds the average TotalAmount. 
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > (
+       SELECT AVG(TotalAmount)
+       FROM Bookings
+       );
+
+-- ============================================
+-- QUESTION 165
+-- ============================================
+
+-- Show all rooms where PricePerNight > ₹5000 for premium customer recommendations. 
+
+SELECT *
+FROM Rooms
+WHERE PricePerNight > 5000;
+
+-- ============================================
+-- QUESTION 166
+-- ============================================
+
+-- Show all unique capacities in descending order. 
+
+SELECT DISTINCT Capacity 
+FROM Rooms
+ORDER BY Capacity
+DESC;
+
+-- ============================================
+-- QUESTION 167
+-- ============================================
+
+--  Display the first 4 rooms sorted alphabetically by RoomType. 
+
+SELECT *
+FROM Rooms
+ORDER BY RoomType
+LIMIT 4;
+
+-- ============================================
+-- QUESTION 168
+-- ============================================
+
+-- Show all unique staff first names. 
+
+SELECT DISTINCT FirstName 
+FROM Staff;
+
+-- ============================================
+-- QUESTION 169
+-- ============================================
+
+-- Identify rooms with PricePerNight higher than the maximum PricePerNight of rooms with Capacity = 2
+
+SELECT *
+FROM Rooms
+WHERE PricePerNight > (
+        SELECT MAX(PricePerNight)
+        FROM Rooms
+        WHERE Capacity = 2
+        );
+
+-- ============================================
+-- QUESTION 170
+-- ============================================
+
+-- Show all unique cities in descending order from the Customers table.
+
+SELECT DISTINCT City
+FROM Customers
+ORDER BY City 
+DESC;
+
+-- ============================================
+-- QUESTION 171
+-- ============================================
+
+-- List all bookings where TotalAmount > 5000.
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > 5000;
+
+-- ============================================
+-- QUESTION 172
+-- ============================================
+
+--  Display each booking’s BookingID with TotalAmount using CONCAT.
+
+SELECT CONCAT(BookingID," ",TotalAmount) AS INFO
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 173
+-- ============================================
+
+-- Show all bookings handled by StaffID = 2. 
+
+SELECT *
+FROM Bookings
+WHERE StaffID = 2;
+
+-- ============================================
+-- QUESTION 174
+-- ============================================
+
+-- Display the last 2 added rooms from the Rooms table.
+
+SELECT *
+FROM Rooms
+ORDER BY RoomID DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 175
+-- ============================================
+
+-- List all rooms where capacity is greater than 2.
+
+SELECT *
+FROM Rooms
+WHERE Capacity > 2;
