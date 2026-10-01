@@ -2076,3 +2076,119 @@ BEGIN
 END //
 
 DELIMITER ;
+
+-- ============================================
+-- QUESTION 196
+-- ============================================
+
+-- Delete all rooms with Capacity = 1. 
+-- cant delete the row because the row is parant to the bookings table.
+
+DELETE FROM Rooms
+WHERE Capacity = 1;
+
+-- ============================================
+-- QUESTION 197
+-- ============================================
+
+-- Management wants to list all customers who have made more than 5 bookings.
+
+SELECT CustomerID,COUNT(BookingID)
+FROM Bookings
+GROUP BY CustomerID
+HAVING COUNT(BookingID) > 5;
+
+-- ============================================
+-- QUESTION 198
+-- ============================================
+
+--  Identify customers who live in the same city. (Customers self join)
+
+SELECT *
+FROM Customers AS C1
+JOIN Customers AS C2
+ON C1.City = C2.City
+WHERE C1.CustomerID < C2.CustomerID;
+
+-- ============================================
+-- QUESTION 199
+-- ============================================
+
+--  Create a trigger to automatically delete a payment when its corresponding bookings is deleted 
+
+DELIMITER //
+
+CREATE TRIGGER AutoDeletePayment
+AFTER DELETE ON Bookings
+FOR EACH ROW
+BEGIN
+    DELETE FROM Payments
+    WHERE BookingID = OLD.BookingID;
+END //
+
+DELIMITER ;
+
+-- ============================================
+-- QUESTION 200
+-- ============================================
+
+-- Find rooms that have the same PricePerNight. (Rooms self join)
+
+SELECT *
+FROM Rooms AS r1
+JOIN Rooms AS r2
+ON r1.PricePerNight = r2.PricePerNight
+WHERE r1.RoomID <> r2.RoomID;
+
+-- ============================================
+-- QUESTION 201
+-- ============================================
+
+-- List staff members who share the same Role. (Staff self join)
+
+SELECT *
+FROM Staff AS s1
+JOIN Staff AS s2
+ON s1.Role = s2.Role
+WHERE s1.StaffID < s2.StaffID;
+
+-- ============================================
+-- QUESTION 202
+-- ============================================
+
+-- Show customer first name, last name, and TotalAmount of their bookings using JOIN between Customers and Bookings.
+
+SELECT C.FirstName, C.LastName, B.TotalAmount
+FROM Customers AS C
+JOIN Bookings AS B
+ON C.CustomerID = B.CustomerID;
+
+-- ============================================
+-- QUESTION 203
+-- ============================================
+
+--  Show Customer Name and Payment Amount by joining Customers, Bookings, and payments
+
+SELECT CONCAT(C.FirstName, ' ', C.LastName) AS CustomerName,
+       P.Amount
+FROM Customers AS C
+JOIN Bookings AS B
+    ON C.CustomerID = B.CustomerID
+JOIN Payments AS P
+    ON B.BookingID = P.BookingID;
+
+-- ============================================
+-- QUESTION 204
+-- ============================================
+
+--  Show PaymentID, Customer Name, and BookingID for payments made using card
+
+SELECT P.PaymentID,P.PaymentMethod,
+       CONCAT(C.FirstName, ' ', C.LastName) AS CustomerName,
+       P.BookingID
+FROM Customers AS C
+JOIN Bookings AS B
+    ON C.CustomerID = B.CustomerID
+JOIN Payments AS P
+    ON B.BookingID = P.BookingID
+WHERE P.PaymentMethod = 'Card';
