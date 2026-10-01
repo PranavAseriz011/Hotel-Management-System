@@ -1817,7 +1817,9 @@ FROM Bookings;
 -- QUESTION 173
 -- ============================================
 
--- Show all bookings handled by StaffID = 2. 
+ ============================================
+-- QUESTION 176
+-- ============================================-- Show all bookings handled by StaffID = 2. 
 
 SELECT *
 FROM Bookings
@@ -1843,3 +1845,234 @@ LIMIT 2;
 SELECT *
 FROM Rooms
 WHERE Capacity > 2;
+
+-- ============================================
+-- QUESTION 176
+-- ============================================
+
+-- Display the last 2 staff members from the Staff table.
+
+SELECT *
+FROM Staff
+ORDER BY StaffID DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 177
+-- ============================================
+
+-- Show all unique roles available in the hotel. 
+
+SELECT DISTINCT Role 
+FROM Staff;
+
+-- ============================================
+-- QUESTION 178
+-- ============================================
+
+--  Display the last 2 payments. 
+
+SELECT *
+FROM Payments
+ORDER BY PaymentID DESC
+LIMIT 2;
+
+-- ============================================
+-- QUESTION 179
+-- ============================================
+
+-- The manager wants to see bookings where CustomerID IN (2,4,6,8) to track repeat guests.
+
+SELECT *
+FROM Bookings
+WHERE CustomerID IN (2,4,6,8);
+
+-- ============================================
+-- QUESTION 180
+-- ============================================
+
+-- Show all unique first names of customers for a duplicate check.
+
+SELECT DISTINCT FirstName 
+FROM Customers;
+
+-- ============================================
+-- QUESTION 181
+-- ============================================
+
+-- Display all bookings where TotalAmount > 5000.
+
+SELECT *
+FROM Bookings
+WHERE TotalAmount > 5000;
+
+-- ============================================
+-- QUESTION 182
+-- ============================================
+
+-- The admin wants to delete all payments where Amount < 1000. 
+
+SET SQL_SAFE_UPDATES = 0;
+
+DELETE FROM Payments
+WHERE Amount < 1000;
+
+-- ============================================
+-- QUESTION 183
+-- ============================================
+
+-- Display all unique RoomIDs in descending order.
+
+SELECT DISTINCT RoomID 
+FROM Rooms
+ORDER BY RoomID
+DESC;
+
+-- ============================================
+-- QUESTION 184
+-- ============================================
+
+-- List customers who made more than 5 bookings. 
+
+SELECT CustomerID, COUNT(BookingID)
+FROM Bookings
+GROUP BY CustomerID 
+HAVING COUNT(BookingID) > 5;
+
+-- ============================================
+-- QUESTION 185
+-- ============================================
+
+-- Display all rooms by capacity in ascending order.
+
+SELECT *
+FROM Rooms
+ORDER BY Capacity;
+
+-- ============================================
+-- QUESTION 186
+-- ============================================
+
+--  Show each booking’s BookingID with TotalAmount using CONCAT. 
+
+SELECT CONCAT(BookingID," ",TotalAmount) AS Info 
+FROM Bookings;
+
+-- ============================================
+-- QUESTION 187
+-- ============================================
+
+--  List all staff working as Managers.
+
+SELECT *
+FROM Staff
+WHERE Role = 'Manager';
+
+-- ============================================
+-- QUESTION 188
+-- ============================================
+
+-- Show customers whose FirstName length > 5 characters for a name-pattern study 
+
+SELECT *
+FROM Customers 
+WHERE LENGTH(FirstName) > 5;
+
+-- ============================================
+-- QUESTION 189
+-- ============================================
+
+-- Display all unique capacities in descending order.
+
+SELECT DISTINCT Capacity
+FROM Rooms
+ORDER BY Capacity 
+DESC;
+
+-- ============================================
+-- QUESTION 190
+-- ============================================
+
+--  Display the first 4 payments only.
+
+SELECT *
+FROM Payments 
+ORDER BY PaymentID
+LIMIT 4;
+
+-- ============================================
+-- QUESTION 191
+-- ============================================
+
+-- Show each payment’s ID, Method, Amount in one line.
+
+SELECT CONCAT_WS(" ",PaymentID,PaymentMethod,Amount) AS Info
+FROM Payments;
+
+-- ============================================
+-- QUESTION 192
+-- ============================================
+
+--  Create a VIEW HighValueBookings showing all bookings with TotalAmount > 20000
+
+CREATE VIEW HighValueBookings AS
+SELECT *
+FROM Bookings
+WHERE TotalAmount > 20000;
+
+-- ============================================
+-- QUESTION 193
+-- ============================================
+
+-- Create a trigger to automatically delete a payment when its corresponding booking is deleted. 
+
+DELIMITER //
+
+CREATE TRIGGER DeletePaymentAfterBooking
+AFTER DELETE ON Bookings
+FOR EACH ROW
+BEGIN
+    DELETE FROM Payments
+    WHERE BookingID = OLD.BookingID;
+END //
+
+DELIMITER ;
+
+-- ============================================
+-- QUESTION 194
+-- ============================================
+
+-- Create a trigger to prevent insertion of a booking where CheckOutDate < CheckInDate
+
+DELIMITER //
+
+CREATE TRIGGER PreventInvalidBooking
+BEFORE INSERT ON Bookings
+FOR EACH ROW
+BEGIN
+    IF NEW.CheckOutDate < NEW.CheckInDate THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'CheckOutDate cannot be before CheckInDate';
+    END IF;
+END //
+
+DELIMITER ;
+
+-- ============================================
+-- QUESTION 195
+-- ============================================
+
+-- Create a trigger to automatically update TotalAmount in Bookings when a payment is inserted in Payments.
+
+DELIMITER //
+
+CREATE TRIGGER UpdateBookingTotalAfterPayment
+AFTER INSERT ON Payments
+FOR EACH ROW
+BEGIN
+    UPDATE Bookings
+    SET TotalAmount = TotalAmount + NEW.Amount
+    WHERE BookingID = NEW.BookingID;
+END //
+
+DELIMITER ;
